@@ -35,7 +35,7 @@ class NoteApp extends React.Component {
     });
   }
 
-  onSearchHandler() {
+  onSearchHandler(event) {
     this.setState(() => {
       return { search: event.target.value };
     });
@@ -72,18 +72,32 @@ class NoteApp extends React.Component {
         ></NoteHeader>
         <div className="note-app__body">
           <AddNote addNote={this.onAddNoteHandler} />
+
           <h2 className="note-item__title">Active Note</h2>
-          <NoteList
-            notes={activeNote}
-            onArchive={this.onArchiveChange}
-            onDelete={this.onDeleteHandler}
-          />
+          {activeNote.length > 0 ? (
+            <NoteList
+              notes={activeNote}
+              onDelete={this.onDeleteHandler}
+              onArchive={this.onArchiveChange}
+            />
+          ) : (
+            <p className="notes-list__empty-message">
+              You don't have any active notes
+            </p>
+          )}
+
           <h2 className="note-item__title">Archived Note</h2>
-          <NoteList
-            notes={archivedNote}
-            onArchive={this.onArchiveChange}
-            onDelete={this.onDeleteHandler}
-          />
+          {archivedNote.length > 0 ? (
+            <NoteList
+              notes={archivedNote}
+              onDelete={this.onDeleteHandler}
+              onArchive={this.onArchiveChange}
+            />
+          ) : (
+            <p className="notes-list__empty-message">
+              You don't have any archived notes
+            </p>
+          )}
         </div>
       </>
     );
